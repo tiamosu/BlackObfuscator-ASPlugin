@@ -2,20 +2,14 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
 dependencies {
-    implementation "com.android.tools.build:gradle:7.3.1"
-    implementation "com.android.tools.build:transform-api:+"
-    implementation "commons-io:commons-io:+"
-
     //gradle sdk
     implementation gradleApi()
     //groovy sdk
     implementation localGroovy()
-    implementation "com.github.CodingGay.BlackObfuscator:dex-tools:2.2"
-}
 
-repositories {
-    mavenCentral()
-    mavenLocal()
+    implementation "com.android.tools.build:gradle:7.3.1"
+    implementation "commons-io:commons-io:2.15.0"
+    implementation "com.github.CodingGay.BlackObfuscator:dex-tools:2.2"
 }
 
 publishing {

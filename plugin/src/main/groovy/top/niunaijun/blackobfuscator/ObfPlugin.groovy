@@ -84,7 +84,7 @@ class ObfPlugin implements Plugin<Project> {
                 task.doLast(action)
             }
             if (tasks.isEmpty()) {
-                System.err.println("This gradle version is not applicable. Please submit issues in https://github.com/CodingGay/BlackObfuscator-ASPlugin")
+                System.err.println("This gradle version is not applicable. Please submit issues in https://github.com/tiamosu/BlackObfuscator-ASPlugin")
             }
         }
     }
