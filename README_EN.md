@@ -13,13 +13,9 @@ This project is an Android Studio plugin version of [BlackObfuscator](https://gi
 
 #### Step 1. Configure your build.gradle (in top level directory)
 ```gradle
-repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-}
 dependencies {
     ...
-    classpath "com.github.CodingGay:BlackObfuscator-ASPlugin:3.9"
+    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.0"
 }
 ```
 #### Step 2. Apply the plugin in your app module

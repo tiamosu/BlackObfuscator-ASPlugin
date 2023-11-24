@@ -16,14 +16,9 @@
 
 #### Step 1. 根目录Gradle文件加入
 ```gradle
-repositories {
-    ...
-    // 加入仓库
-    maven { url 'https://jitpack.io' }
-}
 dependencies {
     ...
-    classpath "com.github.CodingGay:BlackObfuscator-ASPlugin:3.9"
+    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.0"
 }
 ```
 #### Step 2. app模块加入plugin

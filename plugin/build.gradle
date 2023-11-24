@@ -1,5 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'maven-publish'
 
 dependencies {
     //gradle sdk
@@ -12,13 +11,4 @@ dependencies {
     implementation "com.github.CodingGay.BlackObfuscator:dex-tools:2.2"
 }
 
-publishing {
-    publications {
-        release(MavenPublication) {
-            from components.java
-            groupId 'top.niunaijun.blackobfuscator'
-            artifactId 'plugin'
-            version "1.0.2"
-        }
-    }
-}
+apply plugin: "com.vanniktech.maven.publish"

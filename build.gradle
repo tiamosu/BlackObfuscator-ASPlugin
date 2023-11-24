@@ -2,12 +2,18 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        mavenLocal()
         maven { url 'https://jitpack.io' }
+
+        // sonatype
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.3.1'
-        classpath "top.niunaijun.blackobfuscator:plugin:1.0.2"
+        //noinspection GradleDependency
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.25.2'
+        // 混淆插件
+        classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.0"
     }
 }
 
