@@ -18,7 +18,7 @@
 ```gradle
 dependencies {
     ...
-    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.0"
+    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.2"
 }
 ```
 #### Step 2. app模块加入plugin
