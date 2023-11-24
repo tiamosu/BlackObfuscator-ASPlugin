@@ -9,28 +9,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Milk on 2022/1/12.
- * * ∧＿∧
- * (`･ω･∥
- * 丶　つ０
- * しーＪ
- * 此处无Bug
- */
 public class Mapping {
     private File mFile;
     private final Map<String, String> mapping = new HashMap<>();
 
     public Mapping(String file) {
-        if (file == null)
-            return;
+        if (file == null) return;
         mFile = new File(file);
         parser();
     }
 
     private void parser() {
-        if (mFile == null || !mFile.exists())
-            return;
+        if (mFile == null || !mFile.exists()) return;
         try {
             List<String> strings = FileUtils.readLines(mFile, Charset.defaultCharset());
             for (String string : strings) {
@@ -41,7 +31,6 @@ public class Mapping {
                 if (split.length != 2) {
                     continue;
                 }
-//                System.out.println("add mapping : " + string);
                 mapping.put(split[0], split[1].substring(0, split[1].length() - 1));
             }
         } catch (IOException ignored) {

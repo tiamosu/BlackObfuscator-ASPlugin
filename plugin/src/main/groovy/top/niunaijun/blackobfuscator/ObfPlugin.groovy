@@ -3,26 +3,28 @@ package top.niunaijun.blackobfuscator
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.internal.api.ReadOnlyProductFlavor
-import com.android.build.gradle.internal.dsl.BuildType
-import com.android.build.gradle.internal.dsl.ProductFlavor
-import com.android.build.gradle.internal.tasks.DexMergingTask
 import org.gradle.api.*
-import org.gradle.api.internal.file.DefaultFilePropertyFactory
 import top.niunaijun.blackobfuscator.core.ObfDex
 
-public class ObfPlugin implements Plugin<Project> {
+class ObfPlugin implements Plugin<Project> {
     private String PLUGIN_NAME = "BlackObfuscator"
     private Project mProject
     public static BlackObfuscatorExtension sObfuscatorExtension
     public Map<String, String> mTaskMapping = new HashMap<>()
 
     void apply(Project project) {
+        // 缓存 project
         this.mProject = project
+        // 获取 android:AppExtension
         def android = project.extensions.findByType(AppExtension)
+        // 自定义配置
         project.configurations.create(PLUGIN_NAME).extendsFrom(project.configurations.implementation)
         sObfuscatorExtension = project.extensions.create(PLUGIN_NAME, BlackObfuscatorExtension, project)
 
+        // 清理任务映射
         mTaskMapping.clear()
+
+        // 输出日志提示信息
         project.afterEvaluate {
             System.out.println("=====BlackObfuscator=====")
             System.out.println(sObfuscatorExtension.toString())
@@ -33,22 +35,11 @@ public class ObfPlugin implements Plugin<Project> {
             if (!sObfuscatorExtension.enabled) {
                 return
             }
-            def action = new Action<Task>() {
-                @Override
-                void execute(Task task) {
-                    task.getOutputs().getFiles().collect().each() { element ->
-                        def file = new File(element.toString())
-                        ObfDex.obf(file.getAbsolutePath(),
-                                sObfuscatorExtension.depth,
-                                sObfuscatorExtension.obfClass,
-                                sObfuscatorExtension.blackClass,
-                                mTaskMapping.get(task.name))
-                    }
-                }
-            }
+
+            // 初始化任务列表
             List<Task> tasks = new ArrayList<>()
             if (android != null) {
-                android.applicationVariants.all(new Action<ApplicationVariant>() {
+                android.applicationVariants.configureEach(new Action<ApplicationVariant>() {
                     @Override
                     void execute(ApplicationVariant applicationVariant) {
                         File mappingFile = null
@@ -70,6 +61,25 @@ public class ObfPlugin implements Plugin<Project> {
                 })
             }
 
+            // 自定义action
+            def action = new Action<Task>() {
+                @Override
+                void execute(Task task) {
+                    task.getOutputs().getFiles().collect().each() { element ->
+                        def file = new File(element.toString())
+                        def taskOutputFilePath = file.getAbsolutePath()
+                        def mappingFilePath = mTaskMapping.get(task.name)
+                        // 混淆核心逻辑
+                        ObfDex.obf(taskOutputFilePath,
+                                sObfuscatorExtension.depth,
+                                sObfuscatorExtension.obfClass,
+                                sObfuscatorExtension.blackClass,
+                                mappingFilePath)
+                    }
+                }
+            }
+
+            // 遍历任务列表 通过doLast 追加自定义action
             for (Task task : tasks) {
                 task.doLast(action)
             }
@@ -89,7 +99,7 @@ public class ObfPlugin implements Plugin<Project> {
         println("$name$buildType mappingFile $mappingFile")
     }
 
-    private String upperCaseFirst(String val) {
+    private static String upperCaseFirst(String val) {
         char[] arr = val.toCharArray()
         arr[0] = Character.toUpperCase(arr[0])
         return new String(arr)
@@ -106,8 +116,7 @@ public class ObfPlugin implements Plugin<Project> {
                 }
                 println("add Task $name")
             }
-        } catch(UnknownTaskException e1) {
-            //Catch block
+        } catch (UnknownTaskException ignored) {
         }
     }
 }

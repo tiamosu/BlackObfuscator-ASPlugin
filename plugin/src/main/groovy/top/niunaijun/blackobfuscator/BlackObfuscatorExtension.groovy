@@ -1,4 +1,5 @@
 package top.niunaijun.blackobfuscator
+
 import org.gradle.api.Project
 
 class BlackObfuscatorExtension {
@@ -8,12 +9,10 @@ class BlackObfuscatorExtension {
     String[] blackClass = []
 
     BlackObfuscatorExtension(Project project) {
-
     }
 
-
     @Override
-    public String toString() {
+    String toString() {
         return "BlackObfuscatorExtension{" +
                 "enabled=" + enabled +
                 ", depth=" + depth +
