@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static org.objectweb.asm.Opcodes.ASM8;
+import static org.objectweb.asm.Opcodes.ASM9;
 
 public class Operator {
 
@@ -78,7 +78,7 @@ public class Operator {
         ClassReader classReader = new ClassReader(classByteCode);
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
-        ClassVisitor classVisitor = new EncodeClassVisitor(ASM8, classWriter, EncodePlanBMethodVisitor.class);
+        ClassVisitor classVisitor = new EncodeClassVisitor(ASM9, classWriter, EncodePlanBMethodVisitor.class);
         classReader.accept(classVisitor, ClassReader.SKIP_DEBUG);
         try {
             return classWriter.toByteArray();

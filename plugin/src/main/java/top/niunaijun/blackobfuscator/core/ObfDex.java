@@ -15,7 +15,7 @@ import top.niunaijun.obfuscator.ObfuscatorConfiguration;
 
 public class ObfDex {
 
-    public static void obf(String dir, int depth, String[] obfClass, String[] blackClass, String mappingFile) {
+    public static void obf(String dir, int obfType, int depth, String[] obfClass, String[] blackClass, String mappingFile) {
         File file = new File(dir);
         Mapping mapping = new Mapping(mappingFile);
         if (file.isDirectory()) {
@@ -23,17 +23,17 @@ public class ObfDex {
             if (files == null) return;
             for (File input : files) {
                 if (input.isFile()) {
-                    handleDex(input, depth, obfClass, blackClass, mapping);
+                    handleDex(input, obfType, depth, obfClass, blackClass, mapping);
                 } else {
-                    obf(input.getAbsolutePath(), depth, obfClass, blackClass, mappingFile);
+                    obf(input.getAbsolutePath(), obfType, depth, obfClass, blackClass, mappingFile);
                 }
             }
         } else {
-            handleDex(file, depth, obfClass, blackClass, mapping);
+            handleDex(file, obfType, depth, obfClass, blackClass, mapping);
         }
     }
 
-    private static void handleDex(File input, int depth, String[] obfClass, String[] blackClass, Mapping mapping) {
+    private static void handleDex(File input, int obfType, int depth, String[] obfClass, String[] blackClass, Mapping mapping) {
         if (!input.getAbsolutePath().endsWith(".dex")) return;
         File tempJar = null;
         File splitDex = null;
@@ -94,10 +94,13 @@ public class ObfDex {
                 }
             }).doMain("-f", splitDex.getAbsolutePath(), "-o", tempJar.getAbsolutePath());
 
-            //            new Jar2Dex().doMain("-f", "-o", obfDex.getAbsolutePath(), tempJar.getAbsolutePath());
+            if (obfType == 0) {
+                new Jar2Dex().doMain("-f", "-o", obfDex.getAbsolutePath(), tempJar.getAbsolutePath());
+            } else if (obfType == 1) {
+                Operator.run(tempJar, new_tempJar, true);
+                new Jar2Dex().doMain("-f", "-o", obfDex.getAbsolutePath(), new_tempJar.getAbsolutePath());
+            }
 
-            Operator.run(tempJar, new_tempJar, true);
-            new Jar2Dex().doMain("-f", "-o", obfDex.getAbsolutePath(), new_tempJar.getAbsolutePath());
             DexLib2Utils.mergerAndCoverDexFile(input, obfDex, input);
         } catch (Throwable t) {
             t.printStackTrace();

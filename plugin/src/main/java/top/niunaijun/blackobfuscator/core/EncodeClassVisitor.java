@@ -13,7 +13,7 @@ import static org.objectweb.asm.Opcodes.ACC_ENUM;
 import static org.objectweb.asm.Opcodes.ACC_INTERFACE;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;
-import static org.objectweb.asm.Opcodes.ASM8;
+import static org.objectweb.asm.Opcodes.ASM9;
 
 public class EncodeClassVisitor extends ClassVisitor {
     private String owner;
@@ -55,7 +55,7 @@ public class EncodeClassVisitor extends ClassVisitor {
         MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
         try {
             Constructor<? extends EncodeMethodVisitor> constructor = encodeMethodVisitorClass.getConstructor(int.class, MethodVisitor.class);
-            EncodeMethodVisitor encodeMethodVisitor = constructor.newInstance(ASM8, methodVisitor);
+            EncodeMethodVisitor encodeMethodVisitor = constructor.newInstance(ASM9, methodVisitor);
             encodeMethodVisitor.setOn(on);
             encodeMethodVisitor.setData_name(data_name);
             encodeMethodVisitor.setIndex_name(index_name);

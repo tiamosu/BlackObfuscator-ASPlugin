@@ -50,6 +50,8 @@ android {
 
 BlackObfuscator {
     enabled true
+    type = 1
+    depth = 1
     obfClass = ["top.niunaijun.blackobfuscator.asplugin", "androidx.core.app"]
 }
 

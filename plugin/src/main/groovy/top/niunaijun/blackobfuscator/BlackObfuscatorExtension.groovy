@@ -3,6 +3,7 @@ package top.niunaijun.blackobfuscator
 import org.gradle.api.Project
 
 class BlackObfuscatorExtension {
+    int type = 0
     boolean enabled = false
     int depth = 1
     String[] obfClass = []
@@ -14,7 +15,8 @@ class BlackObfuscatorExtension {
     @Override
     String toString() {
         return "BlackObfuscatorExtension{" +
-                "enabled=" + enabled +
+                "type=" + type +
+                ", enabled=" + enabled +
                 ", depth=" + depth +
                 ", obfClass=" + Arrays.toString(obfClass) +
                 ", blackClass=" + Arrays.toString(blackClass) +

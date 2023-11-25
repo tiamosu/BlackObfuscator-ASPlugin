@@ -15,7 +15,7 @@ This project is an Android Studio plugin version of [BlackObfuscator](https://gi
 ```gradle
 dependencies {
     ...
-    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.2"
+    classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.3"
 }
 ```
 #### Step 2. Apply the plugin in your app module

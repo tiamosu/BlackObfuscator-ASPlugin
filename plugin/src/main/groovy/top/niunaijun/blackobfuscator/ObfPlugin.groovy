@@ -71,6 +71,7 @@ class ObfPlugin implements Plugin<Project> {
                         def mappingFilePath = mTaskMapping.get(task.name)
                         // 混淆核心逻辑
                         ObfDex.obf(taskOutputFilePath,
+                                sObfuscatorExtension.type,
                                 sObfuscatorExtension.depth,
                                 sObfuscatorExtension.obfClass,
                                 sObfuscatorExtension.blackClass,

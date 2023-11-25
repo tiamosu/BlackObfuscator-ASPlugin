@@ -13,7 +13,7 @@ buildscript {
         //noinspection GradleDependency
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.25.0'
         // 混淆插件
-        classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.2"
+        classpath "com.gitee.tiamosu:obfuscator-plugin:1.0.3"
     }
 }
 
